@@ -17,30 +17,54 @@ const argv = program.opts();
 const invokeAction = async ({ action, id, name, email, phone }) => {
     switch (action) {
         case "list":
-            const contacts = await contactsOperations.listContacts();
-            console.table(contacts);
+            try {
+                const contacts = await contactsOperations.listContacts();
+                console.table(contacts);
+
+            } catch (error) {
+                console.log(error.message);
+            }
+
             break;
 
         case "get":
-            const contact = await contactsOperations.getContactById(id);
-            if (!contact) {
-                throw new Error(`Contact with id ${id} not found`);
+            try {
+                const contact = await contactsOperations.getContactById(id);
+                if (!contact) {
+                    throw new Error(`Contact with id ${id} not found`);
+                }
+                console.table(contact);
+
+            } catch (error) {
+                console.log(error.message);
             }
-            console.table(contact);
+
             break;
 
         case "add":
-            const newContact = await contactsOperations.addContact(
-                name,
-                email,
-                phone
-            );
-            console.table(newContact);
+            try {
+                const newContact = await contactsOperations.addContact(
+                    name,
+                    email,
+                    phone
+                );
+                console.table(newContact);
+
+            } catch (error) {
+                console.log(error.message)
+            }
+
             break;
 
         case "remove":
-            const removeContact = await contactsOperations.removeContact(id);
-            console.table(removeContact);
+            try {
+                const removeContact = await contactsOperations.removeContact(id);
+                console.table(removeContact);
+
+            } catch (error) {
+                console.log(error.message)
+            }
+
             break;
 
         default:
